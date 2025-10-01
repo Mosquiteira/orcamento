@@ -1,10 +1,30 @@
+<script>
+// Máscara para telefone: (DDD) 99999-9999
+document.addEventListener('DOMContentLoaded', function() {
+  const telInput = document.getElementById('telefone');
+  if (telInput) {
+    telInput.addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      if (v.length > 0) v = '(' + v;
+      if (v.length > 3) v = v.slice(0, 3) + ') ' + v.slice(3);
+      if (v.length > 10) v = v.slice(0, 10) + '-' + v.slice(10);
+      e.target.value = v;
+    });
+  }
+});
+</script>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
 <title>Orçamento Telas Mosquiteiras</title>
 <style>
+html {
+  font-size: 16px;
+}
 * { box-sizing: border-box; }
 
 body {
@@ -22,12 +42,30 @@ body {
 .container {
   max-width: 600px;
   width: 95%;  /* quase toda a tela em mobile */
-  background: #2c2c2c;
+  background: #232323;
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 0 18px rgba(0,0,0,0.5);
   text-align: center;
   margin-top: 20px; /* espaço no topo em mobile */
+
+button.remove {
+  width: 100%;
+  background: #000 !important;
+  color: #fff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  border: 2px solid #e53935;
+  margin-top: 8px;
+  gap: 8px;
+}
+button.remove .emoji {
+  color: #e53935;
+  font-size: 20px;
+  margin-right: 6px;
 }
 
 h2 { font-size: 22px; margin-bottom: 15px; }
@@ -38,14 +76,14 @@ label {
   font-weight: 600;
   margin-top: 10px;
   font-size: 14px;
-  color: #ccc;
+  color: #fafafa;
   text-align: center;
 }
 
 input, select {
   width: 100%;
   padding: 12px;
-  font-size: 16px;
+  font-size: 18px;
   border-radius: 8px;
   border: 1px solid #555;
   margin-top: 5px;
@@ -60,7 +98,7 @@ input:focus, select:focus {
 }
 
 button {
-  padding: 12px 20px;
+  padding: 16px 24px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -107,7 +145,7 @@ button.add { width: 100%; }
 }
 
 .value-display {
-  background: #555;
+  background: #444;
   padding: 6px 8px;
   border-radius: 6px;
   font-weight: 600;
@@ -117,13 +155,32 @@ button.add { width: 100%; }
 }
 
 .total-box {
-  background: #444;
+  background: #333;
   padding: 12px;
   border-radius: 8px;
   margin-top: 10px;
   font-weight: bold;
   font-size: 15px;
   text-align: center;
+}
+
+button.remove {
+  width: 100%;
+  background: #000 !important;
+  color: #fff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  border: 1px solid #e53935;
+  margin-top: 8px;
+  gap: 8px;
+}
+button.remove .emoji {
+  color: #e53935;
+  font-size: 20px;
+  margin-right: 6px;
 }
 
 /* Media Queries: tablets e desktop */
@@ -140,37 +197,39 @@ button.add { width: 100%; }
 <body>
 <div class="container">
 
-  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;">
-    <span style="font-size:1.6em;font-weight:bold;letter-spacing:1px;">Mosquiteira.com</span>
-    <span style="display:flex;align-items:center;gap:6px;background:#25d366;padding:6px 12px;border-radius:18px;">
-      <img src="projeto administrador/zap.jpg" alt="WhatsApp" style="width:28px;height:28px;border-radius:50%;background:#fff;object-fit:cover;border:2px solid #fff;">
-      <span style="font-size:1.1em;font-weight:600;color:#222;">(13) 4141-2112</span>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-bottom: 15px;">
+    <span style="color: #e53935; font-size: 2rem; font-weight: bold; letter-spacing: 1px;">MOSQUITEIRA.COM</span>
+    <span style="color: #eee; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+  <img src="zap.jpg" alt="WhatsApp" style="height: 1.4em; width: 1.4em; vertical-align: middle; border-radius: 50%; box-shadow: 0 0 6px #111; background: #222; padding: 2px; object-fit: cover; border: 2px solid #25d366;"> (13) 4141-2112
     </span>
   </div>
 
-  <h2 style="display:none">Orçamento Telas Mosquiteiras</h2>
+
+
   <label>Nome</label>
   <input id="nome" type="text" placeholder="Digite seu nome">
 
-  <label>Telefone</label>
-  <input id="telefone" type="text" placeholder="(13) 99999-9999">
+  <label for="telefone">Número de telefone</label>
+  <input id="telefone" type="text" placeholder="Digite seu telefone">
 
-  <label>Endereço</label>
-  <input id="endereco" type="text" placeholder="Rua / Av, nº">
+  <label for="endereço">Endereço</label>
+  <input id="endereço" type="text" placeholder="Digite seu endereço">
 
-  <label>Bairro</label>
-  <input id="bairro" type="text" placeholder="Digite o bairro">
+  <label for="bairro">Bairro</label>
+  <input id="bairro" type="text" placeholder="Digite seu bairro">
+
+
 
   <h3>Telas</h3>
   <div id="screens" class="screens-grid"></div>
   <button class="add" onclick="addScreen()">➕ Adicionar Tela</button>
 
-
   <div class="total-box" id="totalBox">
-    <div id="totalText">total R$ 0,00</div>
-    <div id="total3x">3x sem juros R$ 0,00</div>
-    <div id="totalVista">à vista R$ 0,00</div>
+    Total: R$0,00<br>
+    3x sem juros: R$0,00<br>
+    à vista (-5%): R$0,00
   </div>
+
 
   <button class="send" onclick="sendWhatsApp()">📲 Enviar Orçamento</button>
   <button class="clear" onclick="resetForm()">🗑️ Limpar Tudo</button>
@@ -184,13 +243,22 @@ function formatBRL(value){ return value.toLocaleString('pt-BR',{style:'currency'
 const tipoLabels = { removivel:"Tela Removível", correr:"Tela de Correr", tecido:"Troca de Tecido" };
 
 function calcValue(h,w,tipo){ 
-  if(!h || !w) return 0; 
+  if(!h || !w) return 0;
+  let valor = 0;
   switch(tipo){
-    case 'removivel': return (h+0)*(w+0)*349;
-    case 'correr': return (h*w*459) + (1*1);
-    case 'tecido': return (h*w*119) + (1*1);
-    default: return 0;
+    case 'removivel':
+      valor = (h+0)*(w+0)*349;
+      break;
+    case 'correr':
+      valor = (h*w*459) + (1*1);
+      break;
+    case 'tecido':
+      valor = (h*w*119) + (1*1);
+      break;
+    default:
+      return 0;
   }
+  return Math.round(valor); // Arredonda o valor final
 }
 
 function createScreen(index){
@@ -222,7 +290,7 @@ function createScreen(index){
       <label>Preço</label>
       <div class="value-display">${screens[index].v ? formatBRL(screens[index].v) : 'R$ 0,00'}</div>
     </div>
-    <button class="remove" onclick="removeScreen(${index})">❌ Remover</button>
+  <button class="remove" onclick="removeScreen(${index})"><span class="emoji">❌</span> Remover</button>
   `;
 
   const ambient=div.querySelector('.ambient');
@@ -258,38 +326,55 @@ function addScreen(){ screens.push({ambient:'',h:0,w:0,v:0,tipo:'removivel'}); r
 function removeScreen(i){ screens.splice(i,1); render(); }
 
 
-function arredondaEspecial(valor) {
-  // Arredonda para cima se decimal >= 0.5, senão para baixo
-  const inteiro = Math.floor(valor);
-  const decimal = valor - inteiro;
-  if (decimal >= 0.5) return Math.ceil(valor);
-  return inteiro;
-}
-
 function calcTotals(){
-  let total = screens.reduce((s,t)=>s+(t.v||0),0);
-  let totalArred = arredondaEspecial(total);
-  let total3x = arredondaEspecial(totalArred/3);
-  let totalVista = arredondaEspecial(totalArred);
-  $("totalText").innerText = `total R$ ${formatBRL(totalArred).replace('R$','').trim()}`;
-  $("total3x").innerText = `3x sem juros R$ ${formatBRL(total3x).replace('R$','').trim()}`;
-  $("totalVista").innerText = `à vista R$ ${formatBRL(totalVista).replace('R$','').trim()}`;
-  return totalArred;
+  const total = screens.reduce((s, t) => s + (t.v || 0), 0);
+  // Função para arredondar para o real mais próximo e exibir ,00
+  function arredondaReal(valor) {
+    let arredondado = Math.round(valor);
+    return arredondado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  const total3x = total / 3;
+  const totalVista = total - (total * 0.05);
+  $('totalBox').innerHTML = `Total: ${formatBRL(total)}<br>3x sem juros: ${arredondaReal(total3x)}<br>à vista (-5%): ${arredondaReal(totalVista)}`;
+  return total;
 }
 
 function sendWhatsApp(){
-  let nome=$('nome').value, tel=$('telefone').value, end=$('endereco').value, bairro=$('bairro').value;
-  let total=calcTotals();
-  let msg=`*Orçamento Telas Mosquiteiras*%0A%0A`;
-  msg+=`👤 Nome: ${nome}%0A📞 Telefone: ${tel}%0A🏠 Endereço: ${end}, Bairro: ${bairro}%0A%0A`;
-  screens.forEach((s,i)=>{
-    msg+=`Tela ${i+1} - ${s.ambient}%0ATipo: ${tipoLabels[s.tipo]}%0AAltura: ${s.h}m | Largura: ${s.w}m%0AValor: ${formatBRL(s.v)}%0A%0A`;
+  let nome = $('nome').value;
+  let telefone = $('telefone').value;
+  let endereco = $('endereço').value;
+  let bairro = $('bairro').value;
+  let total = calcTotals();
+  // Função para arredondar para o real mais próximo e exibir ,00
+  function arredondaReal(valor) {
+    let arredondado = Math.round(valor);
+    return arredondado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  let msg = `${nome}, segue orçamento da Tela Mosquiteira.\n\n`;
+  msg += `Nome: ${nome}\n`;
+  msg += `Telefone: ${telefone}\n`;
+  msg += `Endereço: ${endereco}\n`;
+  msg += `Bairro: ${bairro}\n\n`;
+  screens.forEach((s, i) => {
+    msg += `Tela ${i + 1} - ${s.ambient}\nValor: ${formatBRL(s.v)}\n\n`;
   });
-  msg+=`💰 Total: ${formatBRL(total)}`;
-  window.open(`https://wa.me/551341412112?text=${msg}`,'_blank');
+  msg += `Total: ${formatBRL(total)}\n`;
+  msg += `3x sem juros: ${arredondaReal(total / 3)}\n`;
+  msg += `à vista: ${arredondaReal(total - (total * 0.05))}\n`;
+
+  // Codificar a mensagem para URL
+  let urlMsg = encodeURIComponent(msg);
+  window.open(`https://wa.me/551341412112?text=${urlMsg}`,'_blank');
 }
 
-function resetForm(){ $('nome').value=''; $('telefone').value=''; $('endereco').value=''; $('bairro').value=''; screens=[]; render(); }
+function resetForm(){
+  $('nome').value='';
+  $('telefone').value='';
+  $('endereço').value='';
+  $('bairro').value='';
+  screens=[];
+  render();
+}
 
 render();
 </script>
