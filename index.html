@@ -139,8 +139,16 @@ button.add { width: 100%; }
 </head>
 <body>
 <div class="container">
-  <h2>Orçamento Telas Mosquiteiras</h2>
 
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;">
+    <span style="font-size:1.6em;font-weight:bold;letter-spacing:1px;">Mosquiteira.com</span>
+    <span style="display:flex;align-items:center;gap:6px;background:#25d366;padding:6px 12px;border-radius:18px;">
+      <img src="projeto administrador/zap.jpg" alt="WhatsApp" style="width:28px;height:28px;border-radius:50%;background:#fff;object-fit:cover;border:2px solid #fff;">
+      <span style="font-size:1.1em;font-weight:600;color:#222;">(13) 4141-2112</span>
+    </span>
+  </div>
+
+  <h2 style="display:none">Orçamento Telas Mosquiteiras</h2>
   <label>Nome</label>
   <input id="nome" type="text" placeholder="Digite seu nome">
 
@@ -157,7 +165,12 @@ button.add { width: 100%; }
   <div id="screens" class="screens-grid"></div>
   <button class="add" onclick="addScreen()">➕ Adicionar Tela</button>
 
-  <div class="total-box" id="totalBox">Total: R$ 0,00</div>
+
+  <div class="total-box" id="totalBox">
+    <div id="totalText">total R$ 0,00</div>
+    <div id="total3x">3x sem juros R$ 0,00</div>
+    <div id="totalVista">à vista R$ 0,00</div>
+  </div>
 
   <button class="send" onclick="sendWhatsApp()">📲 Enviar Orçamento</button>
   <button class="clear" onclick="resetForm()">🗑️ Limpar Tudo</button>
@@ -244,10 +257,24 @@ function render(){ $('screens').innerHTML=''; screens.forEach((s,i)=>$('screens'
 function addScreen(){ screens.push({ambient:'',h:0,w:0,v:0,tipo:'removivel'}); render(); }
 function removeScreen(i){ screens.splice(i,1); render(); }
 
-function calcTotals(){ 
-  const total=screens.reduce((s,t)=>s+(t.v||0),0);
-  $('totalBox').innerText=`Total: ${formatBRL(total)} `;
-  return total;
+
+function arredondaEspecial(valor) {
+  // Arredonda para cima se decimal >= 0.5, senão para baixo
+  const inteiro = Math.floor(valor);
+  const decimal = valor - inteiro;
+  if (decimal >= 0.5) return Math.ceil(valor);
+  return inteiro;
+}
+
+function calcTotals(){
+  let total = screens.reduce((s,t)=>s+(t.v||0),0);
+  let totalArred = arredondaEspecial(total);
+  let total3x = arredondaEspecial(totalArred/3);
+  let totalVista = arredondaEspecial(totalArred);
+  $("totalText").innerText = `total R$ ${formatBRL(totalArred).replace('R$','').trim()}`;
+  $("total3x").innerText = `3x sem juros R$ ${formatBRL(total3x).replace('R$','').trim()}`;
+  $("totalVista").innerText = `à vista R$ ${formatBRL(totalVista).replace('R$','').trim()}`;
+  return totalArred;
 }
 
 function sendWhatsApp(){
