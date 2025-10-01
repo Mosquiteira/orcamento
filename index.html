@@ -33,21 +33,21 @@ body {
   color: #eee;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* topo em mobile */
   min-height: 100vh;
+  display: block;
 }
 
 .container {
   max-width: 600px;
-  width: 95%;  /* quase toda a tela em mobile */
+  width: 95%;
   background: #232323;
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 0 18px rgba(0,0,0,0.5);
   text-align: center;
-  margin-top: 20px; /* espaço no topo em mobile */
+  margin: 40px auto 0 auto;
+  display: block;
+}
 
 button.remove {
   width: 100%;
@@ -227,14 +227,22 @@ button.remove .emoji {
   <div class="total-box" id="totalBox">
     Total: R$0,00<br>
     3x sem juros: R$0,00<br>
-    à vista (-5%): R$0,00
+    à vista: R$0,00
   </div>
 
 
   <button class="send" onclick="sendWhatsApp()">📲 Enviar Orçamento</button>
   <button class="clear" onclick="resetForm()">🗑️ Limpar Tudo</button>
 </div>
-
+<style>
+body {
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+}
+</style>
 <script>
 const $ = id => document.getElementById(id);
 let screens = [];
@@ -335,7 +343,7 @@ function calcTotals(){
   }
   const total3x = total / 3;
   const totalVista = total - (total * 0.05);
-  $('totalBox').innerHTML = `Total: ${formatBRL(total)}<br>3x sem juros: ${arredondaReal(total3x)}<br>à vista (-5%): ${arredondaReal(totalVista)}`;
+  $('totalBox').innerHTML = `Total: ${formatBRL(total)}<br>3x sem juros: ${arredondaReal(total3x)}<br>à vista: ${arredondaReal(totalVista)}`;
   return total;
 }
 
