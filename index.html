@@ -226,8 +226,7 @@ button.remove .emoji {
 
   <div class="total-box" id="totalBox">
     Total: R$0,00<br>
-    3x sem juros: R$0,00<br>
-    à vista: R$0,00
+    3x sem juros: R$0,00
   </div>
 
 
@@ -342,8 +341,8 @@ function calcTotals(){
     return arredondado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
   const total3x = total / 3;
-  const totalVista = total - (total * 0.05);
-  $('totalBox').innerHTML = `Total: ${formatBRL(total)}<br>3x sem juros: ${arredondaReal(total3x)}<br>à vista: ${arredondaReal(totalVista)}`;
+  const totalVista = total - (total * 0.05); // Mantém o cálculo interno
+  $('totalBox').innerHTML = `Total: ${formatBRL(total)}<br>3x sem juros: ${arredondaReal(total3x)}`;
   return total;
 }
 
@@ -368,7 +367,7 @@ function sendWhatsApp(){
   });
   msg += `Total: ${formatBRL(total)}\n`;
   msg += `3x sem juros: ${arredondaReal(total / 3)}\n`;
-  msg += `à vista: ${arredondaReal(total - (total * 0.05))}\n`;
+  // Não exibe o valor à vista para o cliente
 
   // Codificar a mensagem para URL
   let urlMsg = encodeURIComponent(msg);
