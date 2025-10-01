@@ -173,9 +173,9 @@ const tipoLabels = { removivel:"Tela Removível", correr:"Tela de Correr", tecid
 function calcValue(h,w,tipo){ 
   if(!h || !w) return 0; 
   switch(tipo){
-    case 'removivel': return (h+0.1)*(w+0.1)*329*1.05;
-    case 'correr': return (h*w*419) + (1.1*1.1);
-    case 'tecido': return (h*w*119) + (1.1*1.1);
+    case 'removivel': return (h+0)*(w+0)*349;
+    case 'correr': return (h*w*459) + (1*1);
+    case 'tecido': return (h*w*119) + (1*1);
     default: return 0;
   }
 }
