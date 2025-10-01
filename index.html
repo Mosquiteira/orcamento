@@ -341,8 +341,8 @@ function calcTotals(){
     return arredondado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
   const total3x = total / 3;
-  const totalVista = total - (total * 0.05); // Mantém o cálculo interno
-  $('totalBox').innerHTML = `Total: ${formatBRL(total)}<br>3x sem juros: ${arredondaReal(total3x)}`;
+  // à vista igual ao total, sem desconto
+  $('totalBox').innerHTML = `Total: ${formatBRL(total)}<br>3x sem juros: ${arredondaReal(total3x)}<br>à vista: ${arredondaReal(total)}`;
   return total;
 }
 
@@ -367,7 +367,7 @@ function sendWhatsApp(){
   });
   msg += `Total: ${formatBRL(total)}\n`;
   msg += `3x sem juros: ${arredondaReal(total / 3)}\n`;
-  // Não exibe o valor à vista para o cliente
+  msg += `à vista: ${arredondaReal(total)}\n`;
 
   // Codificar a mensagem para URL
   let urlMsg = encodeURIComponent(msg);
